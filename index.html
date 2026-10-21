@@ -340,9 +340,37 @@
                 </figure>
 
                 <p>
-                    <strong>Data transformations.</strong> We grouped the 33,358 allegations by officer to
-                    count each officer's authorized complaints and harshest punishments, then averaged those
-                    counts by gender. The callouts divide men's average by women's.
+                    <strong>Data transformations.</strong> We used pandas in Python. The dataset has one row
+                    per allegation: 33,358 allegations from 12,056 complaints against 3,996 officers, with no
+                    missing values in the columns we used.
+                </p>
+                <ol>
+                    <li>
+                        <strong>Flagged each allegation.</strong> An allegation is <em>authorized</em> if its
+                        <code>board_disposition</code> starts with "Substantiated" (8,301 allegations, across all
+                        nine substantiated categories). It counts as the <em>harshest punishment</em> only if it
+                        is exactly "Substantiated (Charges)" (3,796 allegations).
+                    </li>
+                    <li>
+                        <strong>Grouped by officer.</strong> We grouped allegations by
+                        <code>unique_mos_id</code> and counted each officer's authorized allegations and
+                        harshest punishments, giving one row per officer (3,609 men and 387 women). Each officer
+                        has a single gender in the data.
+                    </li>
+                    <li>
+                        <strong>Averaged by gender.</strong> Men average 2.12 authorized allegations and 0.99
+                        harshest punishments per officer; women average 1.64 and 0.58. The chart rounds these to
+                        one decimal.
+                    </li>
+                    <li>
+                        <strong>Computed the callouts.</strong> Each callout is men's average divided by women's,
+                        minus one: 2.12 ÷ 1.64 → 30% more, and 0.99 ÷ 0.58 → 69% more.
+                    </li>
+                </ol>
+                <p>
+                    One complaint can contain several allegations, sometimes against different officers. The
+                    chart's "authorized complaints" therefore counts substantiated <em>allegations</em>, not
+                    whole complaints. We kept "complaints" in the label because it is easier to read.
                 </p>
 
                 <p>Design Decisions and Rationale:</p>
@@ -438,13 +466,39 @@
                 </figure>
 
                 <p>
-                    <strong>Data transformations.</strong> The dataset doesn't record promotions, so we
-                    inferred them. We ranked the eight NYPD ranks into seven levels, treating Sergeant and
-                    Detective as equal. An allegation counts as followed by a promotion if the officer's rank
-                    in 2020 is above their rank at the time. We then flagged each officer as ever promoted
-                    and as ever recommended for the harshest punishment. Finally, we computed the promotion
-                    rate for each of the four gender and punishment groups.
+                    <strong>Data transformations.</strong> The dataset doesn't record promotions, so we inferred
+                    them from the two rank columns, using the same 3,996 officers as Figure 1.
                 </p>
+                <ol>
+                    <li>
+                        <strong>Ranked the ranks.</strong> We mapped the eight NYPD ranks to seven levels: Police
+                        Officer (0), Sergeant and Detective (1), Lieutenant (2), Captain (3), Deputy Inspector (4),
+                        Inspector (5), and Chiefs and other ranks (6). Sergeant and Detective share a level, so
+                        moving between them is not a promotion.
+                    </li>
+                    <li>
+                        <strong>Flagged promotions.</strong> An allegation is followed by a promotion if the
+                        officer's level in <code>rank_now</code> (their rank in 2020) is higher than in
+                        <code>rank_incident</code> (their rank at the time of the allegation).
+                    </li>
+                    <li>
+                        <strong>Grouped by officer.</strong> An officer counts as <em>promoted</em> if any of their
+                        allegations was followed by a promotion, and as having <em>got the harshest
+                        punishment</em> if any allegation was "Substantiated (Charges)". This splits officers into
+                        four groups: men who got it (1,613), women who got it (135), men who never did (1,996),
+                        and women who never did (252).
+                    </li>
+                    <li>
+                        <strong>Computed promotion rates.</strong> For each group, we divided promoted officers by
+                        all officers: 1,073 of 1,613 men (66.5%) and 60 of 135 women (44.4%) who got the harshest
+                        punishment; 811 of 1,996 men (40.6%) and 78 of 252 women (31.0%) who never did.
+                    </li>
+                    <li>
+                        <strong>Computed the gaps.</strong> We rounded each rate to a whole percent before
+                        subtracting, so the labeled gaps match the printed bars: 67 − 44 = 23 and 41 − 31 = 10.
+                        The unrounded gaps are 22.1 and 9.7 percentage points.
+                    </li>
+                </ol>
 
                 <p>Design Decisions and Rationale:</p>
 
