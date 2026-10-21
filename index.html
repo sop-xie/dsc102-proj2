@@ -167,6 +167,83 @@
                 margin-top: 0.8em;
             }
 
+            /* score colors: brick = deceptive, gray = neutral, teal = earnest (kept clear of the charts' navy/pink) */
+            :root {
+                --deceptive: hsl(10 60% 40%);
+                --earnest: hsl(170 45% 30%);
+            }
+
+            .score[data-score^="-"] {
+                background: var(--deceptive);
+            }
+
+            .score[data-score^="+"] {
+                background: var(--earnest);
+            }
+
+            /* "How to read the scores" box */
+            .score-key {
+                margin: 1.5em 0;
+                padding: 1em 1.25em;
+                border: 1px solid var(--color-neutral-80);
+                border-radius: 0.5rem;
+                background: var(--color-neutral-95);
+
+                h3 {
+                    margin-top: 0;
+                }
+
+                p {
+                    margin-block: 0.5em;
+                }
+            }
+
+            /* the -2 ... +2 strip: 9 steps, darker toward each end */
+            .scale {
+                display: flex;
+                gap: 2px;
+                padding: 0;
+                margin: 1em 0 0.3em;
+                list-style: none;
+
+                li {
+                    flex: 1 1 0;
+                    min-width: 0;
+                    margin: 0;
+                    padding: 0.35em 0;
+                    font-weight: 700;
+                    font-variant-numeric: tabular-nums;
+                    text-align: center;
+                    color: var(--color-neutral-10);
+                    background: var(--color-neutral-80);
+                }
+
+                li:first-child {
+                    border-radius: 0.3em 0 0 0.3em;
+                }
+
+                li:last-child {
+                    border-radius: 0 0.3em 0.3em 0;
+                }
+
+                .d4 { background: var(--deceptive); color: white; }
+                .d3 { background: color-mix(in lab, var(--deceptive) 75%, white); color: white; }
+                .d2 { background: color-mix(in lab, var(--deceptive) 50%, white); }
+                .d1 { background: color-mix(in lab, var(--deceptive) 25%, white); }
+                .e1 { background: color-mix(in lab, var(--earnest) 25%, white); }
+                .e2 { background: color-mix(in lab, var(--earnest) 50%, white); }
+                .e3 { background: color-mix(in lab, var(--earnest) 75%, white); color: white; }
+                .e4 { background: var(--earnest); color: white; }
+            }
+
+            .scale-ends {
+                display: flex;
+                justify-content: space-between;
+                font-size: 85%;
+                font-weight: 600;
+                color: var(--color-neutral-40);
+            }
+
             @media (max-width: 40em) {
                 html {
                     max-width: none;
@@ -207,6 +284,42 @@
                 police commissioner makes the final decision.
             </p>
 
+            <aside class="score-key" aria-labelledby="score-key-title">
+                <h3 id="score-key-title">How to read the scores</h3>
+                <p>
+                    Each design decision below has a score showing how deceptive or earnest we think it is,
+                    on a scale from <strong>−2 (fully deceptive)</strong> to <strong>+2 (fully earnest)</strong>,
+                    in steps of 0.5.
+                </p>
+                <ul>
+                    <li>
+                        <strong>Negative scores</strong> mark choices that push readers toward a conclusion the
+                        data doesn't fully support, for example by hiding a denominator or using loaded wording.
+                    </li>
+                    <li><strong>0</strong> means the choice is neutral: it neither misleads nor helps.</li>
+                    <li>
+                        <strong>Positive scores</strong> mark choices that help readers see what the data
+                        actually shows, such as a zero baseline or a clear definition.
+                    </li>
+                </ul>
+                <ol class="scale" aria-label="Score scale from −2, fully deceptive, to +2, fully earnest, in steps of 0.5">
+                    <li class="d4">−2</li>
+                    <li class="d3">−1.5</li>
+                    <li class="d2">−1</li>
+                    <li class="d1">−0.5</li>
+                    <li>0</li>
+                    <li class="e1">+0.5</li>
+                    <li class="e2">+1</li>
+                    <li class="e3">+1.5</li>
+                    <li class="e4">+2</li>
+                </ol>
+                <div class="scale-ends" aria-hidden="true">
+                    <span>Fully deceptive</span>
+                    <span>Neutral</span>
+                    <span>Fully earnest</span>
+                </div>
+            </aside>
+
             <section>
                 <h3>FOR the Proposition</h3>
 
@@ -233,7 +346,7 @@
 
                 <ul class="decisions">
                     <li>
-                        <span class="score">-1.5</span>
+                        <span class="score" data-score="-1.5" title="Score −1.5 on a scale from −2 (fully deceptive) to +2 (fully earnest)">-1.5</span>
                         <strong>Counting per officer instead of per complaint.</strong> Men collect more
                         punishments partly because they have about twice as many allegations each (8.8 vs.
                         4.5). Dividing by allegations would show that a smaller share of men's complaints are
@@ -242,7 +355,7 @@
                         Every number here is true, and the missing denominator does the persuading.
                     </li>
                     <li>
-                        <span class="score">-1</span>
+                        <span class="score" data-score="-1" title="Score −1 on a scale from −2 (fully deceptive) to +2 (fully earnest)">-1</span>
                         <strong>"Harsher punishments" in the title.</strong> The chart shows that men receive
                         <em>more</em> of the harshest punishment, not that their punishments are harsher.
                         "Harsher" suggests severity, which we never measured. An earnest title would be
@@ -250,7 +363,7 @@
                         "harsher" because it sounds more decisive.
                     </li>
                     <li>
-                        <span class="score">-0.5</span>
+                        <span class="score" data-score="-0.5" title="Score −0.5 on a scale from −2 (fully deceptive) to +2 (fully earnest)">-0.5</span>
                         <strong>Relative callouts with brackets.</strong> "Men: 30% more complaints" and
                         "69% more harshest punishments" are accurate ratios, but the absolute gaps are only
                         0.5 and 0.4 per officer. In our first draft the callouts floated above the men's bars.
@@ -259,7 +372,7 @@
                         the eye step up to the taller men's bar.
                     </li>
                     <li>
-                        <span class="score">+1</span>
+                        <span class="score" data-score="+1" title="Score +1 on a scale from −2 (fully deceptive) to +2 (fully earnest)">+1</span>
                         <strong>Plain-language labels with the dataset's terms underneath.</strong> "Authorized
                         complaints" and "Harshest punishment" are easier to read than the legal terms, which
                         we show in small gray text below each label so careful readers can check them. The
@@ -267,7 +380,7 @@
                         "charges," so the plain words also push the message a little.
                     </li>
                     <li>
-                        <span class="score">+1.5</span>
+                        <span class="score" data-score="+1.5" title="Score +1.5 on a scale from −2 (fully deceptive) to +2 (fully earnest)">+1.5</span>
                         <strong>Zero baseline, source line and footnote.</strong> The y-axis starts at zero, so
                         bar heights are proportional. The source line names the dataset and the "at least one
                         authorized complaint" filter, and a footnote explains that we only count the top of
@@ -307,7 +420,7 @@
 
                 <ul class="decisions">
                     <li>
-                        <span class="score">-1</span>
+                        <span class="score" data-score="-1" title="Score −1 on a scale from −2 (fully deceptive) to +2 (fully earnest)">-1</span>
                         <strong>"Rewarded" in the title.</strong> The title frames promotion as a reward for
                         misconduct. The data only shows that harsh punishment and promotion go together.
                         Officers with longer careers collect both more complaints and more promotions, so
@@ -316,7 +429,7 @@
                         but less striking.
                     </li>
                     <li>
-                        <span class="score">-0.5</span>
+                        <span class="score" data-score="-0.5" title="Score −0.5 on a scale from −2 (fully deceptive) to +2 (fully earnest)">-0.5</span>
                         <strong>Gap brackets instead of a ratio.</strong> Our first draft said men were
                         promoted "50% more often" after the harshest punishment (67% vs. 44%). We replaced
                         that ratio with brackets labeled "10-percent gap" and "23-percent gap," so readers
@@ -327,14 +440,14 @@
                         height.
                     </li>
                     <li>
-                        <span class="score">+0.5</span>
+                        <span class="score" data-score="+0.5" title="Score +0.5 on a scale from −2 (fully deceptive) to +2 (fully earnest)">+0.5</span>
                         <strong>Fading the "never got it" pair.</strong> The left pair is drawn at 75% opacity,
                         so the eye lands on the "got it" pair while the comparison stays readable. We first drew
                         it at 57.5% and darkened it so it wouldn't fade into the background. Keeping it visible
                         lets readers see the gap grow, rather than seeing only the headline pair.
                     </li>
                     <li>
-                        <span class="score">-1</span>
+                        <span class="score" data-score="-1" title="Score −1 on a scale from −2 (fully deceptive) to +2 (fully earnest)">-1</span>
                         <strong>Not showing who is missing.</strong> The data only includes officers still on
                         the force in June 2020. Officers who were fired or pushed out after serious discipline
                         are missing, which raises the promotion rate of the punished group. We also don't know
@@ -342,7 +455,7 @@
                         inferred promotion as if it were a recorded outcome.
                     </li>
                     <li>
-                        <span class="score">+1</span>
+                        <span class="score" data-score="+1" title="Score +1 on a scale from −2 (fully deceptive) to +2 (fully earnest)">+1</span>
                         <strong>Zero baseline, definition and footnote.</strong> The y-axis starts at zero, the
                         subtitle defines the harshest punishment as a recommendation for a disciplinary trial,
                         and the same footnote as Figure 1 explains the three punishment levels. A reader who
