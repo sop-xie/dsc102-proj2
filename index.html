@@ -168,33 +168,47 @@
             }
 
             /* score colors: brick = deceptive, gray = neutral, teal = earnest (kept clear of the charts' navy/pink) */
+            /* one shade per step, shared by the legend strip and the score tags so they always match */
             :root {
                 --deceptive: hsl(10 60% 40%);
                 --earnest: hsl(170 45% 30%);
+                --step-d4: var(--deceptive);
+                --step-d3: color-mix(in lab, var(--deceptive) 75%, white);
+                --step-d2: color-mix(in lab, var(--deceptive) 50%, white);
+                --step-d1: color-mix(in lab, var(--deceptive) 25%, white);
+                --step-0: var(--color-neutral-80);
+                --step-e1: color-mix(in lab, var(--earnest) 25%, white);
+                --step-e2: color-mix(in lab, var(--earnest) 50%, white);
+                --step-e3: color-mix(in lab, var(--earnest) 75%, white);
+                --step-e4: var(--earnest);
             }
 
-            .score[data-score^="-"] {
-                background: var(--deceptive);
-            }
-
-            .score[data-score^="+"] {
-                background: var(--earnest);
-            }
+            /* score tags: same shade as their step in the legend; light shades get dark text */
+            .score[data-score="-2"] { background: var(--step-d4); }
+            .score[data-score="-1.5"] { background: var(--step-d3); }
+            .score[data-score="-1"] { background: var(--step-d2); color: var(--color-neutral-10); }
+            .score[data-score="-0.5"] { background: var(--step-d1); color: var(--color-neutral-10); }
+            .score[data-score="0"] { background: var(--step-0); color: var(--color-neutral-10); }
+            .score[data-score="+0.5"] { background: var(--step-e1); color: var(--color-neutral-10); }
+            .score[data-score="+1"] { background: var(--step-e2); color: var(--color-neutral-10); }
+            .score[data-score="+1.5"] { background: var(--step-e3); }
+            .score[data-score="+2"] { background: var(--step-e4); }
 
             /* "How to read the scores" box */
             .score-key {
-                margin: 1.5em 0;
-                padding: 1em 1.25em;
+                margin: 1.25em 0;
+                padding: 0.75em 1.25em;
+                font-size: 95%;
                 border: 1px solid var(--color-neutral-80);
                 border-radius: 0.5rem;
                 background: var(--color-neutral-95);
 
                 h3 {
-                    margin-top: 0;
+                    margin-block: 0 0.4em;
                 }
 
                 p {
-                    margin-block: 0.5em;
+                    margin-block: 0.4em;
                 }
             }
 
@@ -226,14 +240,14 @@
                     border-radius: 0 0.3em 0.3em 0;
                 }
 
-                .d4 { background: var(--deceptive); color: white; }
-                .d3 { background: color-mix(in lab, var(--deceptive) 75%, white); color: white; }
-                .d2 { background: color-mix(in lab, var(--deceptive) 50%, white); }
-                .d1 { background: color-mix(in lab, var(--deceptive) 25%, white); }
-                .e1 { background: color-mix(in lab, var(--earnest) 25%, white); }
-                .e2 { background: color-mix(in lab, var(--earnest) 50%, white); }
-                .e3 { background: color-mix(in lab, var(--earnest) 75%, white); color: white; }
-                .e4 { background: var(--earnest); color: white; }
+                .d4 { background: var(--step-d4); color: white; }
+                .d3 { background: var(--step-d3); color: white; }
+                .d2 { background: var(--step-d2); }
+                .d1 { background: var(--step-d1); }
+                .e1 { background: var(--step-e1); }
+                .e2 { background: var(--step-e2); }
+                .e3 { background: var(--step-e3); color: white; }
+                .e4 { background: var(--step-e4); color: white; }
             }
 
             .scale-ends {
@@ -287,21 +301,10 @@
             <aside class="score-key" aria-labelledby="score-key-title">
                 <h3 id="score-key-title">How to read the scores</h3>
                 <p>
-                    Each design decision below has a score showing how deceptive or earnest we think it is,
-                    on a scale from <strong>−2 (fully deceptive)</strong> to <strong>+2 (fully earnest)</strong>,
-                    in steps of 0.5.
+                    Each design decision is scored from <strong>−2 (fully deceptive)</strong> to
+                    <strong>+2 (fully earnest)</strong>: negative scores push readers toward a conclusion the
+                    data doesn't fully support, and positive scores help them see what it actually shows.
                 </p>
-                <ul>
-                    <li>
-                        <strong>Negative scores</strong> mark choices that push readers toward a conclusion the
-                        data doesn't fully support, for example by hiding a denominator or using loaded wording.
-                    </li>
-                    <li><strong>0</strong> means the choice is neutral: it neither misleads nor helps.</li>
-                    <li>
-                        <strong>Positive scores</strong> mark choices that help readers see what the data
-                        actually shows, such as a zero baseline or a clear definition.
-                    </li>
-                </ul>
                 <ol class="scale" aria-label="Score scale from −2, fully deceptive, to +2, fully earnest, in steps of 0.5">
                     <li class="d4">−2</li>
                     <li class="d3">−1.5</li>
