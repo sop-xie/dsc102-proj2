@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Project 2 Report</title>
+        <style>
+            :root {
+                --color-neutral-95: hsl(220 10% 95%);
+                --color-neutral-90: hsl(220 10% 90%);
+                --color-neutral-80: hsl(220 10% 80%);
+                --color-neutral-70: hsl(220 10% 70%);
+                --color-neutral-60: hsl(220 10% 60%);
+                --color-neutral-50: hsl(220 10% 50%);
+                --color-neutral-40: hsl(220 10% 40%);
+                --color-neutral-30: hsl(220 10% 30%);
+                --color-neutral-20: hsl(220 10% 20%);
+                --color-neutral-10: hsl(220 10% 10%);
+            }
+
+            html {
+                font: 100%/1.5 system-ui;
+                counter-reset: figure;
+                background: var(--color-neutral-95);
+                max-width: min(75vw, 80em);
+                margin: 0 auto;
+            }
+
+            /* Headings */
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                line-height: 1.1;
+                font-weight: 600;
+                text-wrap: balance;
+            }
+
+            h1,
+            h2 {
+                border-bottom: 1px solid var(--color-neutral-80);
+                padding-bottom: 0.2em;
+            }
+
+            h1 {
+                margin-block: 1em 0.5rem;
+                font-size: clamp(2.5em, 150% + 2vh + 2vw, 10vmin);
+                font-weight: 800;
+
+                small {
+                    display: block;
+                    width: fit-content;
+                    padding: 0.2em 0.5em;
+                    margin-inline: auto;
+                    color: white;
+                    background: var(--color-neutral-40);
+                    font-size: 40%;
+                    text-transform: uppercase;
+                    white-space: nowrap;
+                }
+            }
+
+            h2 {
+                font-size: 180%;
+                color: var(--color-neutral-30);
+            }
+
+            h3 {
+                font-size: 130%;
+            }
+
+            /* Lists */
+
+            ul,
+            ol {
+                padding-inline-start: 2em;
+            }
+
+            li {
+                &::marker {
+                    color: var(--color-neutral-40);
+                }
+
+                + li {
+                    margin-top: 0.2em;
+                }
+            }
+
+            /* Sectioning elements */
+
+            header {
+                padding-block: 1em;
+                text-align: center;
+            }
+
+            main {
+                background: white;
+                color: var(--color-neutral-20);
+                border-radius: 1rem;
+                padding: 0.1rem 2rem;
+            }
+
+            /* Figures */
+
+            figure {
+                margin: 1em 0;
+                padding: 0.5rem;
+                margin-inline: -0.5em;
+                border: 1px solid var(--color-neutral-80);
+                box-shadow: 0 0.1em 0.2em var(--color-neutral-95);
+                text-align: center;
+                background: white;
+
+                > figcaption {
+                    font: 500 75% var(--font-sans);
+                    background: var(--color-neutral-95);
+                    padding: 0.5rem;
+                    margin: -0.5rem;
+                    margin-top: 0.5rem;
+                    counter-increment: figure;
+                    text-align: left;
+
+                    &::before {
+                        content: "Figure " counter(figure) ": ";
+                        font-weight: bold;
+                        color: var(--color-neutral-40);
+                    }
+
+                    a:not(:hover, :focus, :active) {
+                        color: inherit;
+                        text-decoration: underline;
+                        text-decoration-color: color-mix(
+                            in lab,
+                            currentColor,
+                            transparent 70%
+                        );
+                    }
+                }
+            }
+
+            /* Additions to the template */
+
+            /* the chart images are 2000px wide: keep them inside the figure */
+            figure img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* score tag at the start of each design decision */
+            .score {
+                display: inline-block;
+                min-width: 3.2em;
+                padding: 0 0.4em;
+                margin-right: 0.3em;
+                border-radius: 0.3em;
+                font-weight: 700;
+                font-variant-numeric: tabular-nums;
+                text-align: center;
+                color: white;
+                background: var(--color-neutral-40);
+            }
+
+            .decisions li + li {
+                margin-top: 0.8em;
+            }
+
+            @media (max-width: 40em) {
+                html {
+                    max-width: none;
+                    margin: 0 1rem;
+                }
+
+                main {
+                    padding: 0.1rem 1rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>
+                <small>Project 2</small>
+                Persuasive or Deceptive Visualization?
+            </h1>
+
+            <p><strong>[Full name]</strong> — <em>[UCSD email]</em></p>
+            <p><strong>[Full name]</strong> — <em>[UCSD email]</em></p>
+            <p><strong>[Full name]</strong> — <em>[UCSD email]</em></p>
+        </header>
+
+        <main>
+            <h2>Proposition: Male officers face more consequences for misconduct than female officers</h2>
+
+            <p>
+                <strong>Data.</strong> Both charts use the NYC Civilian Complaint Review Board (CCRB)
+                records that ProPublica released in July 2020: 33,358 allegations against 3,996 NYPD
+                officers (3,609 men and 387 women), filed between 1985 and 2020. ProPublica included only
+                officers who were still on the force in June 2020 and who had at least one
+                substantiated allegation. On the charts, an <em>authorized complaint</em> is a
+                substantiated allegation, meaning the board found that the officer broke NYPD rules. The
+                <em>harshest punishment</em> is the board's recommendation that the officer face a
+                disciplinary trial ("Substantiated (Charges)"). The board only recommends discipline; the
+                police commissioner makes the final decision.
+            </p>
+
+            <section>
+                <h3>FOR the Proposition</h3>
+
+                <figure>
+                    <img
+                        src="gender_a1_discipline_per_officer.png"
+                        alt="Grouped bar chart. Female officers average 1.6 authorized complaints and 0.6 harshest punishments each; male officers average 2.1 and 1.0. Brackets label the gaps as 30% and 69% more for men."
+                    />
+                    <figcaption>
+                        Average number of authorized complaints and harshest punishments per officer, by
+                        gender. Male officers average more of both. Data:
+                        <a href="https://www.propublica.org/datastore/dataset/civilian-complaints-against-new-york-city-police-officers">NYC CCRB via ProPublica</a>,
+                        3,996 officers with at least one authorized complaint, 1985–2020.
+                    </figcaption>
+                </figure>
+
+                <p>
+                    <strong>Data transformations.</strong> We grouped the 33,358 allegations by officer to
+                    count each officer's authorized complaints and harshest punishments, then averaged those
+                    counts by gender. The callouts divide men's average by women's.
+                </p>
+
+                <p>Design Decisions and Rationale:</p>
+
+                <ul class="decisions">
+                    <li>
+                        <span class="score">-1.5</span>
+                        <strong>Counting per officer instead of per complaint.</strong> Men collect more
+                        punishments partly because they have about twice as many allegations each (8.8 vs.
+                        4.5). Dividing by allegations would show that a smaller share of men's complaints are
+                        authorized (24% vs. 36%), which is the opposite story. An earnest version would add
+                        allegations per officer as a third pair of bars, which would explain much of the gap.
+                        Every number here is true, and the missing denominator does the persuading.
+                    </li>
+                    <li>
+                        <span class="score">-1</span>
+                        <strong>"Harsher punishments" in the title.</strong> The chart shows that men receive
+                        <em>more</em> of the harshest punishment, not that their punishments are harsher.
+                        "Harsher" suggests severity, which we never measured. An earnest title would be
+                        "Male officers receive more complaints and more of the harshest punishments." We kept
+                        "harsher" because it sounds more decisive.
+                    </li>
+                    <li>
+                        <span class="score">-0.5</span>
+                        <strong>Relative callouts with brackets.</strong> "Men: 30% more complaints" and
+                        "69% more harshest punishments" are accurate ratios, but the absolute gaps are only
+                        0.5 and 0.4 per officer. In our first draft the callouts floated above the men's bars.
+                        We added brackets joining each pair so it's clear the comparison is between women and
+                        men, and the callout reads as the size of the gap. Putting women on the left also makes
+                        the eye step up to the taller men's bar.
+                    </li>
+                    <li>
+                        <span class="score">+1</span>
+                        <strong>Plain-language labels with the dataset's terms underneath.</strong> "Authorized
+                        complaints" and "Harshest punishment" are easier to read than the legal terms, which
+                        we show in small gray text below each label so careful readers can check them. The
+                        trade-off is that "authorized" and "harshest" sound stronger than "substantiated" and
+                        "charges," so the plain words also push the message a little.
+                    </li>
+                    <li>
+                        <span class="score">+1.5</span>
+                        <strong>Zero baseline, source line and footnote.</strong> The y-axis starts at zero, so
+                        bar heights are proportional. The source line names the dataset and the "at least one
+                        authorized complaint" filter, and a footnote explains that we only count the top of
+                        the board's three punishment levels. These choices keep the chart checkable. They
+                        also make the framing above more believable, which is part of why it persuades.
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>AGAINST the Proposition</h3>
+
+                <figure>
+                    <img
+                        src="gender_b2_promotion.png"
+                        alt="Grouped bar chart of the percent of officers promoted. Among officers who never got the harshest punishment, 31% of women and 41% of men were promoted, a 10-point gap. Among officers who got it, 44% of women and 67% of men were promoted, a 23-point gap."
+                    />
+                    <figcaption>
+                        Percent of officers promoted after their complaint, by gender and by whether they
+                        were ever recommended for the harshest punishment. The gap between men and women is
+                        larger among officers who got the harshest punishment. Data:
+                        <a href="https://www.propublica.org/datastore/dataset/civilian-complaints-against-new-york-city-police-officers">NYC CCRB via ProPublica</a>,
+                        same 3,996 officers.
+                    </figcaption>
+                </figure>
+
+                <p>
+                    <strong>Data transformations.</strong> The dataset doesn't record promotions, so we
+                    inferred them. We ranked the eight NYPD ranks into seven levels, treating Sergeant and
+                    Detective as equal. An allegation counts as followed by a promotion if the officer's rank
+                    in 2020 is above their rank at the time. We then flagged each officer as ever promoted
+                    and as ever recommended for the harshest punishment. Finally, we computed the promotion
+                    rate for each of the four gender and punishment groups.
+                </p>
+
+                <p>Design Decisions and Rationale:</p>
+
+                <ul class="decisions">
+                    <li>
+                        <span class="score">-1</span>
+                        <strong>"Rewarded" in the title.</strong> The title frames promotion as a reward for
+                        misconduct. The data only shows that harsh punishment and promotion go together.
+                        Officers with longer careers collect both more complaints and more promotions, so
+                        tenure likely explains much of the pattern. An earlier title, "The promotion gap
+                        between men and women is widest after the harshest punishment," was more accurate
+                        but less striking.
+                    </li>
+                    <li>
+                        <span class="score">-0.5</span>
+                        <strong>Gap brackets instead of a ratio.</strong> Our first draft said men were
+                        promoted "50% more often" after the harshest punishment (67% vs. 44%). We replaced
+                        that ratio with brackets labeled "10-percent gap" and "23-percent gap," so readers
+                        compare the two gaps directly. That is more honest than the ratio. However, the labels
+                        say "percent" when they are percentage points, and the 23 comes from rounded values
+                        (the exact gap is 22.1). We also tried a dumbbell chart that drew each gap as a line.
+                        We went back to grouped bars, which also show each group's promotion rate as a bar
+                        height.
+                    </li>
+                    <li>
+                        <span class="score">+0.5</span>
+                        <strong>Fading the "never got it" pair.</strong> The left pair is drawn at 75% opacity,
+                        so the eye lands on the "got it" pair while the comparison stays readable. We first drew
+                        it at 57.5% and darkened it so it wouldn't fade into the background. Keeping it visible
+                        lets readers see the gap grow, rather than seeing only the headline pair.
+                    </li>
+                    <li>
+                        <span class="score">-1</span>
+                        <strong>Not showing who is missing.</strong> The data only includes officers still on
+                        the force in June 2020. Officers who were fired or pushed out after serious discipline
+                        are missing, which raises the promotion rate of the punished group. We also don't know
+                        when or why anyone was promoted. None of this appears on the chart, which presents
+                        inferred promotion as if it were a recorded outcome.
+                    </li>
+                    <li>
+                        <span class="score">+1</span>
+                        <strong>Zero baseline, definition and footnote.</strong> The y-axis starts at zero, the
+                        subtitle defines the harshest punishment as a recommendation for a disciplinary trial,
+                        and the same footnote as Figure 1 explains the three punishment levels. A reader who
+                        reads the small print can see what is being measured. Most readers won't, and the
+                        title does the persuading.
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Final Reflection</h2>
+
+                <p>
+                    What surprised us most was that both sides came from the same honest data, with every
+                    axis starting at zero. The choice of denominator did most of the work. Counting punishments per officer makes men look more punished, because
+                    they have about twice as many allegations. Dividing by allegations, or looking at what
+                    happened to officers afterward, makes men look like they get away with more. The data
+                    side was straightforward once we built one row per officer. The hard part was wording.
+                    We revised the titles and labels more than the charts themselves, going back and forth on
+                    "more" versus "harsher," "received" versus "recommended for," and "percent" versus "percentage
+                    points." Each of those words changed the message. We also had to be
+                    careful with women's numbers, since only 387 of the 3,996 officers are women.
+                </p>
+
+                <p>
+                    We define ethical analysis and visualization as work where a careful reader can recover
+                    the truth from what is shown and disclosed. Every number should be accurate, and every
+                    encoding should be proportional to the data. Choices about which measure to show and who
+                    is included should be visible on the chart, not hidden in the code. The more general the
+                    audience, the higher the bar, because fewer readers will check the small print.
+                </p>
+
+                <p>
+                    We think persuasion is acceptable when it picks which true measure to emphasize, labels
+                    that measure clearly, and keeps the scales honest. Titles that state a conclusion and
+                    color or opacity that directs attention fall in this category. Design becomes misleading
+                    when it leads readers to believe something the data doesn't support. That includes words
+                    that imply cause, like "rewarded," or severity, like "harsher." It also includes calling
+                    percentage points "percent," and hiding a denominator the conclusion depends on. Our
+                    official-looking police styling falls close to the line too, because the charts did not
+                    come from the NYPD. We drew our own line at distorting the data itself. We kept every
+                    axis at zero, dropped an early draft with an axis zoomed to 30–50%, and dropped an icon
+                    array whose rounding inflated a gap. Looking back, some of the framing we allowed, such
+                    as "rewarded," crosses that line, because it asserts a cause the data cannot show.
+                </p>
+            </section>
+        </main>
+    </body>
+</html>
